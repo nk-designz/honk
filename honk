@@ -1,0 +1,100 @@
+#!/bin/bash
+
+honk="
+                                   ___
+                               ,-''   '.
+                             ,'  _   e )'-._
+                            /  ,' '-._<.===-'
+                           /  /
+                          /  ;
+              _.--.__    /   ;
+ ('._    _.-''       '--'    |
+ <_  '-''                     \
+  <'-                          :
+   (__   <__.                  ;
+     '-.   '-.__.      _.'    /
+        \      '-.__,-'    _,'
+         '._    ,    /__,-'
+            ''._\__,'< <____
+                 | |  '----.'.
+                 | |        \ '.
+                 ; |___      \-''
+                 \   --<
+                  '.'.<
+                    '-'"
+
+function watchClipboard {
+	while(true) do
+		XC="$(tail -n 4 $HOME/.clipboard)"
+		XD="$(xclip -r -o)" 
+		XE="$(tail -n 1 $HOME/.clipboard)"
+		if [[ $XD != $XE ]]
+		then
+			echo -e "$XC\n$(xclip -r -o)" > $HOME/.clipboard
+			echo "Updated clipboard"
+		fi
+		sleep 1
+	done
+}
+
+function selectFromClipboard {
+	cat $HOME/.clipboard | dmenu | xclip
+	exit 0
+
+}
+
+case $1 in
+	'help'|'-h'|'--help')
+		echo "Honk"
+		;;
+	'watch'|'-w'|'--watch')
+		echo "Listening for clipboard"
+		watchClipboard
+		exit 1
+		;;
+	'select'|'-s'|'--select')
+		selectFromClipboard
+		exit 1
+		;;
+	'copy'|'-c'|'--copy')
+		xclip < /dev/stdin
+		echo "Jo."
+		exit 0
+		;;
+	'paste'|'-p'|'--paste')
+		xclip -o > /dev/stdout
+		exit 0
+		;;
+	'clean'|'-C'|'--clear')
+		cat /dev/null > $HOME/.clipboard 
+		exit 0
+		;;
+	'size'|'-ß'|'--size')
+		echo -n "Your clipboard has a size of "
+		ls -sh $HOME/.clipboard | awk '{print $1}'
+		exit 0
+		;;
+	'dump'|'-D'|'--dump')
+		cat $HOME/.clipboard
+		exit 0
+		;;
+	'install'|'-I'|'--install'|'update'|'-U'|'--update')
+		cp $0 /usr/sbin && \
+		clear && \
+		echo "Now you can add:" && \
+		echo -e "\texec --no-startup-id honk watch" && \
+		echo "to your i3 config or" && \
+		echo -e "\thonk watch" && \
+		echo "to your autostart." && \
+		honk honk && \
+		read 
+		exit 0
+		;;
+	'honk'|'H'|'--honk')
+		echo -e "$honk"
+		exit 0
+		;;
+	*)
+esac
+echo "$1 is not a valid option.\nRun $0 help|-h|--help for help"
+selectFromClipboard
