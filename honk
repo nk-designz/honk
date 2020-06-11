@@ -23,6 +23,43 @@ honk="
                   '.'.<
                     '-'"
 
+manual="
+Honk:
+
+honk
+|-> help -h --help
+|   this text
+|
+|-> watch -w --watch
+|   start the watcher
+|
+|-> select -s --select
+|   select from last copied items
+|
+|-> copy -c --copy
+|   copy from stdin to clipboard
+|
+|-> paste -p --paste
+|   paste from clipboard to stdout
+|
+|-> clean -C --clean
+|   reset clipboard file
+|
+|-> size -ß --size
+|   print the size of the clipboardfile
+|
+|-> dump -D --dump
+|   dump the whole clipboardfile
+|
+|-> install -I --install
+|   install honk to /usr/sbin/honk
+|
+|-> update -U --update
+|   update honk to master version (wget required)
+|
+|-> honk
+    Just honk -H --honk
+"
 function watchClipboard {
 	while(true) do
 		XC="$(tail -n 4 $HOME/.clipboard)"
@@ -45,7 +82,8 @@ function selectFromClipboard {
 
 case $1 in
 	'help'|'-h'|'--help')
-		echo "Honk"
+		echo -e "$manual" | less
+		exit 0
 		;;
 	'watch'|'-w'|'--watch')
 		echo "Listening for clipboard"
@@ -65,7 +103,7 @@ case $1 in
 		xclip -o > /dev/stdout
 		exit 0
 		;;
-	'clean'|'-C'|'--clear')
+	'clean'|'-C'|'--clean')
 		cat /dev/null > $HOME/.clipboard 
 		exit 0
 		;;
