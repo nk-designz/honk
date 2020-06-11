@@ -78,8 +78,9 @@ case $1 in
 		cat $HOME/.clipboard
 		exit 0
 		;;
-	'install'|'-I'|'--install'|'update'|'-U'|'--update')
+	'install'|'-I'|'--install')
 		cp $0 /usr/sbin && \
+		touch $HOME/.clipboard && \
 		clear && \
 		echo "Now you can add:" && \
 		echo -e "\texec --no-startup-id honk watch" && \
@@ -88,6 +89,13 @@ case $1 in
 		echo "to your autostart." && \
 		honk honk && \
 		read 
+		exit 0
+		;;
+	|'update'|'-U'|'--update')
+		wget https://raw.githubusercontent.com/nk-designz/honk/master/honk &&  \
+		less ./honk && \
+		sudo ./honk install
+		rm ./honk
 		exit 0
 		;;
 	'honk'|'H'|'--honk')
