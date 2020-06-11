@@ -3,12 +3,13 @@ a bash-written small script for persistently managing your clipboard with dmenu 
 ## Preinstallation
 You need to have
 * xclip
-* dmenu (or rofi just sed -i 's/dmenu/rofi/g' honk befor install)
+* dmenu _or rofi just ```sed -i 's/dmenu/rofi/g' honk``` befor install_
+* wget  _for updates_
 installed.
 
 On Arch:
 ```bash
-pacman -Sy xclip dmenu
+pacman -Sy xclip dmenu wget
 ```
 ## Installation
 Run the script from github
