@@ -15,6 +15,7 @@ Run the script from github
 ```bash
 wget https://raw.githubusercontent.com/nk-designz/honk/master/honk &&  \
 less ./honk && \
+chmod +x ./honk && \
 sudo ./honk install
 ```
 ## Alternatively
