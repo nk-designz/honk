@@ -91,7 +91,7 @@ case $1 in
 		read 
 		exit 0
 		;;
-	|'update'|'-U'|'--update')
+	'update'|'-U'|'--update')
 		wget https://raw.githubusercontent.com/nk-designz/honk/master/honk &&  \
 		less ./honk && \
 		sudo ./honk install
