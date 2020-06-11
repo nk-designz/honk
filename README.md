@@ -11,6 +11,13 @@ On Arch:
 pacman -Sy xclip dmenu
 ```
 # Installation
+Run the script from github
+```bash
+wget https://raw.githubusercontent.com/nk-designz/honk/master/honk &&  \
+less ./honk && \
+sudo ./honk install
+```
+## Alternatively
 Clone the Repo and run
 ```bash
 sudo ./honk install
