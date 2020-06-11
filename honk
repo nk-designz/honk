@@ -94,7 +94,7 @@ case $1 in
 	'update'|'-U'|'--update')
 		wget https://raw.githubusercontent.com/nk-designz/honk/master/honk &&  \
 		less ./honk && \
-		sudo ./honk install
+		bash ./honk install
 		rm ./honk
 		exit 0
 		;;
